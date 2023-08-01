@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,700&family=Ysabeau+SC:wght@100;200;300;400;500;600;700;800;900;1000&display=swap');
+
+
+@layer components{
+    .about-para{
+        @apply my-4 text-xl font-GentiumBookPlus text-justify
+    }
+
+    .contact-form-control{
+        @apply w-full rounded-md focus-within:border-secondary  focus-within:ring-secondary
+    }
+}
