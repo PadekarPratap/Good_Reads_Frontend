@@ -1,13 +1,36 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LogoImage from "../../assets/images/goodreadslogo.png";
 import Dropdown from "../UIComponents/Dropdown";
 import MobileLogo from "../../assets/images/grlogoshort.png";
 import { RiMenu3Line } from "react-icons/ri";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    setLoggedIn(true);
+    setUser(JSON.parse(localStorage.getItem("userInfo")));
+  }, [loggedIn]);
+
+  const handleLogout = () => {
+    toast.success(`${user.firstName} has been logged out`);
+    navigate("/");
+    setLoggedIn(false);
+    setUser(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("userInfo");
+    setOpenMenu(false);
+  };
 
   return (
     <div className="bg-primary w-full h-16">
@@ -31,17 +54,32 @@ const Navbar = () => {
               <Link to="/books">Books</Link>
             </li>
             <li>
-              <Link to={'/about'} >About</Link>
+              <Link to={"/about"}>About</Link>
             </li>
             <li>
-              <Link to={'/contact'} >Contact</Link>
+              <Link to={"/contact"}>Contact</Link>
             </li>
             <li>
-              <Dropdown />
+              {loggedIn ? (
+                <>
+                  <span className="text-flowral font-bold text-lg">
+                    {user.firstName}
+                  </span>{" "}
+                  <button
+                    onClick={handleLogout}
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg ml-3"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Dropdown />
+              )}
             </li>
           </ul>
         </nav>
-        {/* menu  */}
+
+        {/* Mobile hamburgur menu  */}
         <div
           role="button"
           className="sm:hidden"
@@ -76,23 +114,45 @@ const Navbar = () => {
               <Link to="/books">Books</Link>
             </li>
             <li onClick={() => setOpenMenu((prev) => !prev)}>
-              <Link to={'/about'} >About</Link>
+              <Link to={"/about"}>About</Link>
             </li>
             <li onClick={() => setOpenMenu((prev) => !prev)}>
-              <Link to={'/contact'}>Contact</Link>
+              <Link to={"/contact"}>Contact</Link>
             </li>
-            <li
-              onClick={() => setOpenMenu((prev) => !prev)}
-              className="bg-flowral text-white px-3 py-2"
-            >
-              <Link>Login</Link>
-            </li>
-            <li
-              onClick={() => setOpenMenu((prev) => !prev)}
-              className="bg-flowral text-white px-3 py-2"
-            >
-              <Link>Sign up</Link>
-            </li>
+            {loggedIn ? (
+              <>
+                <li className="text-flowral font-bold text-lg">
+                  {user.firstName}
+                </li>
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg"
+                  >
+                    Logout
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li
+                  onClick={() => setOpenMenu((prev) => !prev)}
+                  className="bg-flowral text-white px-3 py-2"
+                >
+                  <Link className="w-full block" to="/login">
+                    Login
+                  </Link>
+                </li>
+                <li
+                  onClick={() => setOpenMenu((prev) => !prev)}
+                  className="bg-flowral text-white px-3 py-2"
+                >
+                  <Link className="w-full block" to="/register">
+                    Sign up
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       </div>
