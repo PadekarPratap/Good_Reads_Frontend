@@ -19,7 +19,7 @@
   }
 
   .form-group {
-    @apply mt-5 space-y-3;
+    @apply mt-3;
   }
 
   .label-group {
@@ -77,5 +77,13 @@
 
   .error {
     @apply bg-red-100 text-red-600 border border-red-600 px-4 py-2 rounded-md my-3 capitalize;
+  }
+
+  .nav-link {
+    @apply text-xl font-semibold text-[#767676];
+  }
+
+  a.active {
+    @apply text-secondary;
   }
 }

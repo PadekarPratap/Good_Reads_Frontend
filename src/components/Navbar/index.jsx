@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import LogoImage from "../../assets/images/goodreadslogo.png";
 import Dropdown from "../UIComponents/Dropdown";
 import MobileLogo from "../../assets/images/grlogoshort.png";
@@ -48,16 +48,19 @@ const Navbar = () => {
         <nav className="hidden sm:block">
           <ul className="flex gap-8 lg:gap-14 items-center">
             <li>
-              <Link>Home</Link>
+              <NavLink className="nav-link" to="/books">
+                Books
+              </NavLink>
             </li>
             <li>
-              <Link to="/books">Books</Link>
+              <NavLink className="nav-link" to={"/about"}>
+                About
+              </NavLink>
             </li>
             <li>
-              <Link to={"/about"}>About</Link>
-            </li>
-            <li>
-              <Link to={"/contact"}>Contact</Link>
+              <NavLink className="nav-link" to={"/contact"}>
+                Contact
+              </NavLink>
             </li>
             <li>
               {loggedIn ? (
@@ -107,9 +110,6 @@ const Navbar = () => {
 
         <nav>
           <ul className="mt-8 space-y-5 text-xl font-semibold text-secondary">
-            <li onClick={() => setOpenMenu((prev) => !prev)}>
-              <Link>Home</Link>
-            </li>
             <li onClick={() => setOpenMenu((prev) => !prev)}>
               <Link to="/books">Books</Link>
             </li>

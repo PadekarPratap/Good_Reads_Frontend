@@ -92,7 +92,7 @@ const Register = () => {
     <>
       {isLoading && <Loader />}
       <div className="bg-primary min-h-screen flex items-center justify-center">
-        <div className="max-w-xl w-full bg-white p-6 mx-5 rounded-lg">
+        <div className="max-w-xl w-full bg-white p-6 mx-5 my-5 rounded-lg">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Link to="/">
               <img
